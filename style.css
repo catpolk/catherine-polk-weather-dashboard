@@ -1,0 +1,15 @@
+#nav-text {
+    text-align: center;
+    color: white;
+}
+
+#current-weather {
+    border: solid 1px black;
+}
+
+.small-box {
+    border: 1px solid black;
+    margin: 5px;
+    background-color: rgba(30, 36, 93, 0.557);
+    color: white;
+}
