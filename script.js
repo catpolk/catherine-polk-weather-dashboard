@@ -17,19 +17,20 @@ function getApi(cityName) {
       }).then(function (data){
         console.log(data);
         document.getElementById("current-day-city-name").textContent = cityName;
-       
+        document.getElementById("current-date").textContent = new Date(data.current.dt*1000).toLocaleDateString('en-US');
         document.getElementById("temp-current").textContent = data.current.temp;
         document.getElementById("wind-current").textContent = data.current.wind_speed;
         document.getElementById("humidity-current").textContent = data.current.humidity;
         document.getElementById("uv-current").textContent = data.current.uvi;
+        document.getElementById("current-weather-icon").setAttribute('src', `https://openweathermap.org/img/wn/${data.current.weather[0].icon}.png`)
 
         for (var i = 1; i < 6; i++) {
           var weatherData = data.daily[i];
           document.getElementById(`temp-${i}`).textContent = weatherData.temp.day;
           document.getElementById(`wind-${i}`).textContent = weatherData.wind_speed;
           document.getElementById(`humidity-${i}`).textContent = weatherData.humidity;
-
           document.getElementById(`currentDate-${i}`).textContent = new Date(weatherData.dt*1000).toLocaleDateString('en-US');
+          document.getElementById(`icon-${i}`).setAttribute(`src`, `https://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`)
         }
       
       });
@@ -50,6 +51,7 @@ function enterCity(){
     getApi(cityName);
   }
 }
+
 
 // var icon1 = data.list[0].weather[0].icon
 // var iconapi1 = ‘http://openweathermap.org/img/wn/'+ icon1 +‘@2x.png’;
