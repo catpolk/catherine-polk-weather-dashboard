@@ -1,4 +1,4 @@
-* Catherine-Polk-weather-dashboard
+*Catherine-Polk-weather-dashboard
 
 - My motivation was to create a weather dashboard that would show a weather forecast for a current day and for 5 future days.
 
