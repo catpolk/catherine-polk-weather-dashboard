@@ -1,6 +1,20 @@
 var fetchButton = document.getElementById('fetch-button');
-
 const apiKey = "fd4520c83ce363d53b2477e844a3ab5f";
+
+displaySearchHistory();
+
+//entering city name 
+document.getElementById("fetch-button").onclick = enterCity;
+
+function enterCity(){
+  var cityName = document.getElementById("enter-city").value;
+  //checks if a user entered a city name, if not - displays alert message
+  if (cityName ==" ") {
+    alert("Please enter a city name")
+  }else{
+    getApi(cityName);
+  }
+}
 
 function getApi(cityName) {
   var geoRequestUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=${apiKey}`;
@@ -15,7 +29,9 @@ function getApi(cityName) {
       .then(function (response) {
         return response.json();
       }).then(function (data){
-        console.log(data);
+        saveToLocalStorage(cityName);
+        displaySearchHistory();
+
         document.getElementById("current-day-city-name").textContent = cityName;
         document.getElementById("current-date").textContent = new Date(data.current.dt*1000).toLocaleDateString('en-US');
         document.getElementById("temp-current").textContent = data.current.temp;
@@ -39,22 +55,25 @@ function getApi(cityName) {
     
 }  
 
-//entering city name 
-document.getElementById("fetch-button").onclick = enterCity;
+function saveToLocalStorage(cityName) {
+  var lastCity = [cityName]
+  var searchHistory = JSON.parse(window.localStorage.getItem("city")) || [];//putting everithing in the local storage 
+  window.localStorage.setItem("city", JSON.stringify(lastCity.concat(searchHistory)));
 
-function enterCity(){
-  var cityName = document.getElementById("enter-city").value;
-  //checks if a user entered a city name, if not - displays alert message
-  if (cityName ==" ") {
-    alert("Please enter a city name")
-  }else{
-    getApi(cityName);
-  }
 }
 
+function displaySearchHistory() {
+  var searchHistory = JSON.parse(window.localStorage.getItem("city")) || []; //reading what we have in the local storage 
+  var searchHistoryBox = document.getElementById("search-history-box");
+  searchHistoryBox.innerHTML = "";
 
-// var icon1 = data.list[0].weather[0].icon
-// var iconapi1 = ‘http://openweathermap.org/img/wn/'+ icon1 +‘@2x.png’;
+  for (var i = 0; i < searchHistory.length; i++) {
+    let btnSearch = document.createElement('button');
+    btnSearch.textContent = searchHistory[i];
+    btnSearch.classList.add("btn", "btn-secondary", "btn-lg", "btn-block");
 
-// var iconcontent1 = document.querySelector(“#icon1”)
+    searchHistoryBox.append(btnSearch);
+  }
+
+}
 
