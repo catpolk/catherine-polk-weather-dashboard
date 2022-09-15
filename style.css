@@ -22,3 +22,7 @@
 #uv-current {
     background-color: rgb(39, 168, 136);
 }
+
+#display-temp {
+    display: none;
+}
