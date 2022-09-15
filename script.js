@@ -9,7 +9,7 @@ document.getElementById("fetch-button").onclick = enterCity;
 function enterCity(){
   var cityName = document.getElementById("enter-city").value;
   //checks if a user entered a city name, if not - displays alert message
-  if (cityName ==" ") {
+  if (cityName == "") {
     alert("Please enter a city name")
   }else{
     getApi(cityName);
@@ -31,7 +31,9 @@ function getApi(cityName) {
       }).then(function (data){
         saveToLocalStorage(cityName);
         displaySearchHistory();
-
+        
+        var cityCurrent = document.getElementById("city-none");
+        cityCurrent.style.display = "none";
         document.getElementById("current-day-city-name").textContent = cityName;
         document.getElementById("current-date").textContent = new Date(data.current.dt*1000).toLocaleDateString('en-US');
         document.getElementById("temp-current").textContent = data.current.temp;
@@ -48,29 +50,41 @@ function getApi(cityName) {
           document.getElementById(`currentDate-${i}`).textContent = new Date(weatherData.dt*1000).toLocaleDateString('en-US');
           document.getElementById(`icon-${i}`).setAttribute(`src`, `https://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`)
         }
-      
       });
       
     }); 
     
 }  
+function capitalizeFirstLetter(str) {
+  
+  const capitalizedCity = str.charAt(0).toUpperCase() + str.slice(1);
+
+    return capitalized;
+}
+
 
 function saveToLocalStorage(cityName) {
   var lastCity = [cityName]
   var searchHistory = JSON.parse(window.localStorage.getItem("city")) || [];//putting everithing in the local storage 
   window.localStorage.setItem("city", JSON.stringify(lastCity.concat(searchHistory)));
-
 }
+
+
 
 function displaySearchHistory() {
   var searchHistory = JSON.parse(window.localStorage.getItem("city")) || []; //reading what we have in the local storage 
   var searchHistoryBox = document.getElementById("search-history-box");
   searchHistoryBox.innerHTML = "";
+  
 
   for (var i = 0; i < searchHistory.length; i++) {
     let btnSearch = document.createElement('button');
     btnSearch.textContent = searchHistory[i];
     btnSearch.classList.add("btn", "btn-secondary", "btn-lg", "btn-block");
+    
+    btnSearch.addEventListener("click", function(event) { 
+      getApi(event.target.innerText);
+    });
 
     searchHistoryBox.append(btnSearch);
   }
