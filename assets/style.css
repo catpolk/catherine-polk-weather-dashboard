@@ -1,5 +1,4 @@
 #nav-text {
-    text-align: center;
     color: white;
 }
 
@@ -25,4 +24,10 @@
 
 #display-temp {
     display: none;
+}
+
+nav {
+    justify-content: center !important;
+    background: rgb(91,150,222);
+    background: linear-gradient(90deg, rgba(91,150,222,0.836594012605042) 14%, rgba(34,29,122,1) 94%);
 }

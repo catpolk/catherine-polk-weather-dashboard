@@ -10,3 +10,4 @@
 
 - My project stands out becasue it is easy to use; it is very intuitive weather dashboard where a user can find weather forecast for 6 days. My project stands out becasue it saves the search data in local storage, so the user isn't required ti search the same cities again to get the weather, they simply can just click on the city in the list below the search bar. 
 
+![screenShot](./assets/screenShot.jpeg)
